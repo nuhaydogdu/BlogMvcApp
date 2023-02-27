@@ -1,0 +1,96 @@
+﻿@model IEnumerable<BlogMvcApp.Models.Blog>
+@* IEnumerable(Liste) -denmesinin sebebi blog tipindeki birden fazla kaydın olacağı anlamanıa gelemekte *@
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Blog Listesi</h2>
+<hr />
+
+<p>
+    @* null geçtiğimiz değer route kısmı | Create ile aynı controllerdeki Create Actionuna get isteğinde bulunduk*@
+    @Html.ActionLink("Yeni Blog Ekle", "Create", null, new { @class = "btn btn-primary" })
+</p>
+<hr />
+@if (TempData["Blog"] != null)
+{
+    var blog = (BlogMvcApp.Models.Blog)TempData["Blog"];
+
+    <div class="alert alert-success" role="alert">
+        <strong> @blog.Baslik </strong> Kayıt Edildi
+    </div> 
+}
+
+<table class="table table-bordered table-hover table-striped">
+    <tr>
+        @*DisplayNameFor Blog modeli içerisindeki entitylerin(propertylerin) sadece isimlerini almaya yarıyor*@
+        <th>
+            @Html.DisplayNameFor(model => model.Category.KatagoriAdi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Baslik)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Resim)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EklemeTarihi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Onay)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AnaSayfa)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            @* DisplayFor verilen ilgili propertynin değerini almaya yarıyor*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.KatagoriAdi)     
+                @*Blog sınıfındaki CategoryId ye göre Caregory sınıfından CategoryName döndürüyor*@
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Baslik)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Resim)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EklemeTarihi)
+            </td>
+            <td>
+                @if (item.Onay)
+                {
+                    <label class="label label-success">Onaylı</label>
+                }
+                else
+                {
+                    <label class="label label-danger">Onay bekleniyor</label>
+
+                }
+            </td>
+            <td>
+                @if (item.AnaSayfa)
+                {
+                    <label class="label label-success">Anasayfa</label>
+                }
+                else
+                {
+                    <label class="label label-danger">Anasayfa Değil</label>
+
+                }
+            </td>
+            <td>
+                @*Üçüncü parametre olarak girilen (new { id = item.Id }) route value gönderiyor exp:Blog/Edit/5 *@
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning btn-xs" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-xs" })
+            </td>
+        </tr>
+    }
+
+</table>

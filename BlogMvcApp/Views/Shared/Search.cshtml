@@ -1,0 +1,19 @@
+﻿
+@using (Html.BeginForm("List", "Blog", FormMethod.Get))
+//("List","Blog", FormMethod.Get)
+//Arama işlemini yapacağımız List Actionu, Hangi controller içerisinde olduğu BlogController
+//kullanıcının girdiği değeri arama kısmında görebileceğiz
+{
+<div class="well">
+    <h4> Blog Arama</h4>
+    <div class="input-group">
+        @Html.TextBox("AnahtarKelime",null,new {@class="form-control"}) 
+        @*ikinci parametre bu texbox'ıniçerisinde bir değer(value) olsun mu diye biz de null bıraktık*@ 
+        <span class="input-group-btn">
+            <button class="btn btn-info" type="submit" style="height:38px"> </button>
+        </span>
+    </div>
+</div>
+
+}
+

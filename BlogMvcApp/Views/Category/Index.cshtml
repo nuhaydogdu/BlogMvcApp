@@ -1,0 +1,54 @@
+﻿@model IEnumerable<BlogMvcApp.Models.CategoryModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@if (TempData["Kategori"] != null)
+{
+    var katageri = (BlogMvcApp.Models.Category)TempData["Kategori"];
+    //TempData["Kategori"]'nin tipini Category e çevirmemiz gerekiyor. Çünkü İndext'ten TempDataya attığımız değerin türü Category
+
+    <div class="alert alert-success">
+        <strong>@katageri.KatagoriAdi</strong> Kayıt Edildi
+    </div>
+}
+
+<p>
+    @Html.ActionLink("Kategori Ekle", "Create", null, new { @class = "btn btn-primary" })
+</p>
+<table class="table table-hover table-bordered table-striped">
+    <tr>
+        @*DisplayNameFor CategoryModel içerisindeki entitylerin propertylerin isimlerini alıyor*@
+        <th style="width:60%">
+            @Html.DisplayNameFor(model => model.KategoriAdi)
+        </th>
+        <th style="width:15%">
+            @Html.DisplayNameFor(model => model.BlogSayisi)
+        </th>
+
+        <th style="width:250px"></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @*DisplayFor item'ın değerini alıyor*@
+                @*  @HtmlDisplayFor.(modelItem => item.KategoriAdi)*@
+                @item.KategoriAdi
+            </td>
+            <td>
+                @item.BlogSayisi
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning btn-xs" })
+                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-primary btn-xs" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-xs" })
+            </td>
+        </tr>
+    }
+
+</table>

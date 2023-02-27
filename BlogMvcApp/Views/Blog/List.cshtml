@@ -1,0 +1,20 @@
+﻿@model  IEnumerable<BlogMvcApp.Models.BlogModel>
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>Blog Listesi</h2>
+
+
+@*İlk parametre partialimizin isimi ikinci parametre olarakta bizden bir model bekliyor*@
+@Html.Partial("BlogListesi", Model)
+
+
+
+@section SagKolon{
+
+    @Html.Partial("Search")
+    @{Html.RenderAction("KategoriListesi", "Category"); }
+}
+
+
